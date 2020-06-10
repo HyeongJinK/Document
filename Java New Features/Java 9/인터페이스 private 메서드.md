@@ -1,5 +1,7 @@
 ## 인터페이스 private 메서드
 
+인터페이스 안에서 private 메서드를 사용할 수 있게 되었다.
+
 ```java
 public interface JavaNineInterfaces {
 	private void test () {
