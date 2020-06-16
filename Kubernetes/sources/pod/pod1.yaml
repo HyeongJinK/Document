@@ -20,4 +20,4 @@ spec:
   selector:
     type: web   # 라벨로 선택
   ports:
-  - port: 8080
+  - port: 8080  # 포트
