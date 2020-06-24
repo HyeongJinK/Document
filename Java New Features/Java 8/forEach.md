@@ -1,6 +1,7 @@
 Java8 Iterable 인터페이스에 컬렉션을 반복해서 실행할 수 있는 forEach 메소드가 추가되었다.
 
 ## 구조
+
 * default 메서드로 선언되어 있다.
 * 파라미터
   * Consumer
@@ -28,7 +29,8 @@ public static <T> T requireNonNull(T obj) {
 * 8 에서는 forEach 메서드를 사용해서 내부반복을 실행한다.
 * 함수형 인터페이스를 사용해 내부 동작을 정의 하므로 재사용이 용이하다.
 
-### java8 이전 컬렉션 반복실행 
+### java8 이전 컬렉션 반복실행
+ 
 ```java
 for(String str : list) {
 	System.out.println(str);
