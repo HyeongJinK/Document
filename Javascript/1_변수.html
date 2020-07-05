@@ -1,12 +1,22 @@
+<html>
+    <body>
+        <ul>
+            <li>1111</li>
+            <li>2222</li>
+            <li>3333</li>
+        </ul>
+    </body>
+<script>
 // 변수 
 // var
 // 선언이 가장 위로 올라감
 // 함수스코프&블록스코프
+// 클로저
 // 전역변수 지역변수
 // 기본타입과 참조타입
 // call by value
 // call by reference  객체, 배열
-
+// let, const
 const log = console.log;
 
 function var0() {
@@ -21,14 +31,15 @@ function var1() {
 }
 //a1();
 
-function var2() {
-    for (var i = 0; i < 1; i++) {
-        var a = 4;
+function var2() {   //클로저
+    var li = document.querySelectorAll("li");
+    console.log(li);
+    for (var i = 0; i < 3; i++) {
+        li[i].addEventListener("click", () => {alert(i)});
     }
-    log(a); //
 }
 
-//a2();
+//var2();
 
 var aa = 10;
 
@@ -87,3 +98,5 @@ function this0() {
 
 var f1 = {this2 : function() {log(this)}}
 var f2 = {this3 : () => {log(this)}}
+</script>
+</html>
