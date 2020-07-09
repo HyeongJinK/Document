@@ -51,3 +51,11 @@ mvn -Pmyprofile ...
 In fact the -P option will take a CSV list of profiles to activate if you wish to activate multiple profiles simultaneously.
 
 Note: The settings descriptor documentation can be found on the Maven Local Settings Model Website.
+
+
+
+
+
+
+
+<meta name="google-site-verification" content="Zvrwdo1rEDYpRuYKPBQLQvxh-Sua00xQ73KaLPo0RtA" />
