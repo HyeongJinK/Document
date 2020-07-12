@@ -1,10 +1,10 @@
 <script>const log = console.log;</script>
 
-# 제너레이터/이터레이터
+# 제너레이터
 - 제너레이터: 이터레이터이자 이터러블을 생성하는 함수
 
 <script>
-  function* gen() {
+  function* gen() { // 함수 이름 앞에 *을 붙인다.
     yield 1;
     if (false) yield 2;
     yield 3;
