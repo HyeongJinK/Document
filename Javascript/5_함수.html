@@ -1,0 +1,83 @@
+<script>
+const log = console.log;
+// function
+// () => {} 화살표 함수
+// default value
+
+// prototype
+
+// 전개 연산자   [...a]
+// 비구조화 할당 let {a} = obj
+// Template literals
+// `${a}`
+// class
+// extend
+// constructer
+// static
+
+// Array
+// new Array(1,2,3), new Array(1)
+// Array.of(1,2,3), Array.of(1)
+
+// [Symbol.iterator] : done, value
+
+
+// const arr = Array.of(1,2,3);
+// let iter = arr[Symbol.iterator]();
+// log(iter);
+// log(iter.next());
+
+// const iterable = {
+//     [Symbol.iterator]() {
+//       let i = 3;
+//       return {
+//         next() {
+//           return i == 0 ? {done: true} : {value: i--, done: false};
+//         },
+//         [Symbol.iterator]() {
+//           return this;
+//         }
+//       }
+//     }
+//   };
+//   let iterator = iterable[Symbol.iterator]();
+//   iterator.next();
+//   iterator.next();
+
+// 제너레이터
+// yield 
+
+
+
+// Array, set, map
+
+
+// Promise
+// new Promise(function(resolve, reject) {
+//     //비동기 실행 함수
+// });
+// const getData = (data, callback) => setTimeout(callback, 1000);
+
+// getData(100, () => {
+//     console.log(100);
+//     getData(() => {
+//         console.log(100 + 200);
+//         getData(() => {
+//             console.log(100 + 200 + 300);
+//         }); //도대체 어디 중 괄호일 것인가..
+//     }); //도대체 어디 중 괄호일 것인가..
+// }); //도대체 어디 중 괄호일 것인가..
+
+// const promise = function(data) {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             console.log(data);
+//             resolve(data);
+//         }, 1000);
+//     });
+// };
+
+// promise(100)
+// .then(result => promise(result + 200))
+// .then(result => promise(result + 300));
+</script>
