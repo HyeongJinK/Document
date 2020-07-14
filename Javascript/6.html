@@ -2,30 +2,146 @@
 // 절차지향 프로그래밍
 // 객체지향 프로그래밍
 const log = console.log;
+// 다른 언어에서의 처음 시작점
+function main1() {   // 시작함수
+    let name1 = "홍길동";
+    let age1 = 30;
+    let name2 = "테스트";
+    let age2 = 20;
 
-function main() {
-    log(sum(1, 2));
+    drawName(name1); 
+    drawAge(age1);
+    drawName(name2); 
+    drawAge(age2);
 }
 
-function sum(a, b) {
-    return a + b;
+function drawName(name) {
+    log(`이름은 ${name}`);
 }
 
-function sub(a , b) {
-    return a - b;
+function drawAge(age) {
+    log(`나이는 ${age}`)
 }
 
-main1();
+//main1();
 
 
-class cal {
-    constructor() {
 
+//객체: 프로그래밍에서 필요한 데이터를 추상화시켜 상태(변수)와 행위(메소드)를 가진 객체
+
+class Person {
+    constructor(name, age) {        // 생성자
+        this.name = name;           // 상태
+        this.age = age;
     }
-    
-    sum(a, b) {
-        a + b;
+
+    drawName() {                    // 행위
+        log(`이름은 ${this.name}`)
+    }
+
+    drawAge() {
+        log(`나이는 ${this.age}`)
     }
 }
 
+class Draw {
+    // static 정적 변수
+    static drawName(name) {
+        log(`이름은 ${name}`)
+    }
+
+    static drawAge(age) {
+        log(`나이는 ${age}`)
+    }
+}
+
+class PersonEx extends Person {
+    constructor(name, age, dept) {
+        super(name, age);
+        this.dept = dept;
+    }
+
+    drawName() {    // 오버라이딩
+        log(`이름은 ${this.name} 입니다.`)
+    }
+
+    drawName(name) {    // 오버로딩  안됨!
+        log(`이름은 ${name}`)
+    }
+
+    drawDept() {
+        log(`부서는 ${this.dept}`)
+    }
+}
+
+
+function main2() {   // 시작함수
+    let person1 = new Person("홍길동", 30);
+
+    person1.drawName();
+    person1.drawAge();
+
+    Draw.drawName("홍길동");
+
+    let person2 = new PersonEx("테스트", 20, "개발팀");
+    person2.drawName();
+    person2.drawName("테스트2");
+    person2.drawAge();
+    person2.drawDept();
+}
+
+//main2();
+
+
+
+// 프로토 타입 예전에 사용했던 그냥 알아만 두기
+function Person2(name, age) {
+    this.name = name;
+    this.age = age;
+}
+
+Person2.prototype.drawName = function() {
+    log(`이름은 ${this.name} 입니다.`)
+}
+
+function main3() {   // 시작함수
+    let person1 = new Person2("홍길동", 30);
+
+    person1.drawName();
+}
+
+//main3();
+
+
+// 함수객체
+function Person3(name, age) {
+    return {
+        drawName: function() {log(`이름은 ${name} 입니다.`)},
+        drawAge: function() {log(`나이는 ${age}`)}
+    }
+}
+
+let person3 = Person3("홍길동3", 30);
+
+// person3.drawName();
+// person3.drawAge();
+
+
+function Person4(props) {
+    const {name, age} = props;
+    const drawName = function() {
+        log(`이름은 ${name} 입니다.`);
+    }
+    const drawAge = function() {
+        log(`나이는 ${age} 입니다.`);
+    }
+
+    //jsx
+    return (
+        drawName
+    );
+}
+
+let person4 = Person4({name: "test", age: 30})
+person4();
 </script>

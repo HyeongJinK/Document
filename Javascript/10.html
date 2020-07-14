@@ -1,0 +1,151 @@
+<script>
+// 일급함수
+// 고차함수
+const log = console.log;
+
+const addMaker = a => b => a + b;
+const add10 = addMaker(10);
+log(add10(5));
+log(add10(10));
+
+log("==================================")
+const temp1 = {
+    [Symbol.iterator]() {
+        let i = 0;
+
+        return {
+            next() {
+                if (i < 5) {
+                    return {value: i++, done: false};
+                } else {
+                    return {done: true};
+                }
+            },
+            [Symbol.iterator]() {
+                return this;
+            }
+        }
+
+    }
+}
+
+for ( a of temp1) {
+    log(a);
+}
+
+log("==================================")
+let iter1 = temp1[Symbol.iterator]();
+for ( a of iter1) {
+    log(a);
+}
+
+log("==================================")
+function* temp2() {
+    for (let i = 0; i < 5; i++ ){
+        yield i;
+    }
+}
+for (a of temp2()) {
+    log(a);
+}
+
+log("==================================")
+// 짝수만 뽑아내기
+
+function* infinity(i = 0) {
+    while(true) yield i++;
+}
+
+function* limit(l, iter) {
+    for (a of iter) {
+        yield a;
+        if (a == l) return;
+    }
+}
+
+function* odds(l) {
+    for (a of limit(l, infinity(1))) {
+        if (a % 2) yield a;
+    }
+}
+
+
+for (a of odds(10)) {
+    log(a);
+}
+log("==================================")
+const [head, ...tail] = odds(10);
+log(head);
+log(tail);
+
+log("==================================")
+// map, filter, reduce
+// map
+const arr1 = [1,2,3,4];
+
+log(arr1.map((a) => a + 1));
+
+log("==================================")
+const map = (f, iter) => {
+    let res = [];
+    for (a of iter) {
+        res.push(f(a));
+    } 
+    return res;
+}
+
+log(map(a => a + 1, arr1));
+
+log("==================================")
+const set1 = new Set([1,2,3,4]);
+
+//log(set1.map((a) => a + 1));    //error
+log(map(a => a + 1, set1));
+
+// 필터
+// const arr1 = [1,2,3,4];
+
+log("==================================")
+log(arr1.filter(a => a > 2));
+
+const filter = (f, iter) => {
+    let res = [];
+    for(a of iter) {
+        if (f(a)) res.push(a);
+    }
+    return res;
+}
+
+log(filter(a => a > 2, set1));
+log("==================================")
+/*
+function* temp2() {
+    for (let i = 0; i < 5; i++ ){
+        yield i;
+    }
+}
+*/
+log(map(a => a+1, temp2()));
+log("==================================")
+// reduce
+let sum = 0;
+for(a of arr1) {
+    sum += a;
+}
+
+log(sum);
+
+const reduce = (f, init, iter) => {
+    if (!iter) {
+        iter = init[Symbol.iterator]();
+        init = iter.next.value;
+    }
+    for (a of iter) {
+        init = f(init, a);
+    }
+    return init;
+}
+const add = (a, b) => a + b;
+log(reduce(add, 0, arr1));
+
+</script>
