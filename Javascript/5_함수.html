@@ -80,4 +80,11 @@ const log = console.log;
 // promise(100)
 // .then(result => promise(result + 200))
 // .then(result => promise(result + 300));
+
+
+
+var f = {};
+
+f.__proto__.test = () => {console.log("test")};
+f.test();
 </script>
