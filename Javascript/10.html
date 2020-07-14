@@ -148,4 +148,8 @@ const reduce = (f, init, iter) => {
 const add = (a, b) => a + b;
 log(reduce(add, 0, arr1));
 
+// go, pipe, curry
+const go = (...args) => reduce((a, f) => f(a), args);
+const pipe = (f, ...fs) => (...as) => go(f(...as), ...fs);
+const curry = f => (a, ..._) => _.length ? f(a, ..._) : (..._) => f(a, ..._);
 </script>
