@@ -1,4 +1,4 @@
-export const data = {
+const boardData = {
     errorCode: 0,
     message: "success",
     data: [
