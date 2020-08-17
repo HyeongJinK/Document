@@ -4,6 +4,3 @@
 // valueOf 객체로 캐스팅  
 // parseInt int로 캐스팅
 ```
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbMjEzODAyMTMwN119
--->
