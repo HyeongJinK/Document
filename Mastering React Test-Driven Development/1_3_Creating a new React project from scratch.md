@@ -132,6 +132,8 @@ We need to enable the packages we've just installed. Create a new file, .babelrc
 ```
 
 With that, you're all set to write some tests. You may wish to check in at this point.
+
+
 ---
 ---
 
