@@ -30,7 +30,7 @@ public class P99_SortArray {
                 , integers
                 , (value) -> {BubbleSort.bubbleSort((int[]) value);});
 
-        SortingDraw2(clock
+        SortingDraw(clock
                 , melons
                 , (value) -> { BubbleSort.bubbleSortWithComparator(value, byType); });
 
@@ -42,26 +42,26 @@ public class P99_SortArray {
                 , integers
                 , (value) -> {BubbleSort.bubbleSortOptimized((int[]) value);});
 
-        SortingDraw2(clock
+        SortingDraw(clock
                 , melons
                 , (value) -> { BubbleSort.bubbleSortOptimizedWithComparator(value, byType); });
     }
 
-    private static void SortingDraw2(Clock clock, Melon[] melons, Consumer<Melon[]> consumer) {
+    private static void SortingDraw(Clock clock, Melon[] melons, Consumer<Melon[]> consumer) {
         System.out.println("\nSorting melons by type ...");
         Melon[] cloneMelonBs = melons.clone();
-        long startTimeV5 = clock.millis();
+        long startTime = clock.millis();
         consumer.accept(cloneMelonBs);
-        displayExecutionTime(clock.millis() - startTimeV5);
+        displayExecutionTime(clock.millis() - startTime);
         displayMelonsSortedArray(cloneMelonBs);
     }
 
     private static void SortingDraw(Clock clock, int[] integers, Consumer consumer) {
         System.out.println("\nSorting numbers ...");
         int[] cloneIntegersBs = integers.clone();
-        long startTimeV4 = clock.millis();
+        long startTime = clock.millis();
         consumer.accept(cloneIntegersBs);
-        displayExecutionTime(clock.millis() - startTimeV4);
+        displayExecutionTime(clock.millis() - startTime);
         displayIntSortedArray(cloneIntegersBs);
     }
 
