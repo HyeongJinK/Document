@@ -11,5 +11,6 @@ public class App
     public static void main( String[] args )
     {
         P99_SortArray.bubble();
+        P99_SortArray.insert();
     }
 }

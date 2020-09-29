@@ -14,40 +14,47 @@ public class P99_SortArray {
             "Gac", "Bitter", "Winter", "Sprite", "Korean", "Canary", "Charentais",
             "Bailan", "Hami", "Santa Claus", "Sky Rocket", "Golden Langkawi", "Apollo",
             "Honey Globe", "Autumn Sweet", "Jade Dew", "Golden Prize", "Ten Me", "New Century"};
+    private static Clock clock = Clock.systemUTC();
+    private static Random rnd = new Random();
+    private static Comparator<Melon> byType = Comparator.comparing(Melon::getType);
+    private static int[] integers = arrayInit(rnd);
+    private static Melon[] melons = MelonInit(rnd);
 
     public static void bubble() {
-        Clock clock = Clock.systemUTC();
-        Random rnd = new Random();
-        Comparator<Melon> byType = Comparator.comparing(Melon::getType);
-
-        int[] integers = arrayInit(rnd);
-        Melon[] melons = MelonInit(rnd);
-
         System.out.println("\n\nSort via Bubble sort:");
         System.out.println("----------------------");
 
-        SortingDraw(clock
-                , integers
+        SortingDraw(integers
                 , (value) -> {BubbleSort.bubbleSort((int[]) value);});
 
-        SortingDraw(clock
-                , melons
+        SortingDraw(melons
                 , (value) -> { BubbleSort.bubbleSortWithComparator(value, byType); });
 
 
         System.out.println("\n\nSort via Bubble sort optimized:");
         System.out.println("----------------------");
 
-        SortingDraw(clock
-                , integers
+        SortingDraw(integers
                 , (value) -> {BubbleSort.bubbleSortOptimized((int[]) value);});
 
-        SortingDraw(clock
-                , melons
+        SortingDraw(melons
                 , (value) -> { BubbleSort.bubbleSortOptimizedWithComparator(value, byType); });
     }
 
-    private static void SortingDraw(Clock clock, Melon[] melons, Consumer<Melon[]> consumer) {
+    public static void insert() {
+        System.out.println("\n\nSort via Insertion sort:");
+        System.out.println("----------------------");
+
+        System.out.println("\nSorting numbers ...");
+        SortingDraw(integers
+            , (value) -> {InsertionSort.insertionSort((int[]) value);});
+
+        System.out.println("\nSorting melons by type ...");
+        SortingDraw(melons
+                , (value) -> {InsertionSort.insertionSortWithComparator(value, byType);});
+    }
+
+    private static void SortingDraw(Melon[] melons, Consumer<Melon[]> consumer) {
         System.out.println("\nSorting melons by type ...");
         Melon[] cloneMelonBs = melons.clone();
         long startTime = clock.millis();
@@ -56,7 +63,7 @@ public class P99_SortArray {
         displayMelonsSortedArray(cloneMelonBs);
     }
 
-    private static void SortingDraw(Clock clock, int[] integers, Consumer consumer) {
+    private static void SortingDraw(int[] integers, Consumer consumer) {
         System.out.println("\nSorting numbers ...");
         int[] cloneIntegersBs = integers.clone();
         long startTime = clock.millis();
