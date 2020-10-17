@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "react": "^16.14.0",롯데프리미엄아울렛 파주점
+    "react": "^16.14.0",
     "react-dom": "^16.14.0"
   },
   "devDependencies": {

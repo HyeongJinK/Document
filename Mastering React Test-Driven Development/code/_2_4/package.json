@@ -19,7 +19,8 @@
   },
   "scripts": {
     "build": "webpack",
-    "test": "jest"
+    "test": "jest",
+    "test2" : "npx jest --verbose"
   },
   "author": "",
   "license": "ISC"
