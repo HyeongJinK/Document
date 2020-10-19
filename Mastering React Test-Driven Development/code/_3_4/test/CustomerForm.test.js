@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
-import { createContainer } from './domManipulators';
-import { CustomerForm } from '../src/CustomerForm';
+import React from "react";
+import ReactTestUtils from "react-dom/test-utils";
+import { createContainer } from "./domManipulators";
+import { CustomerForm } from "../src/CustomerForm";
 
-describe('CustomerForm', () => {
+describe("CustomerForm", () => {
   let render, container;
 
   beforeEach(() => {
@@ -15,7 +15,7 @@ describe('CustomerForm', () => {
     return {
       fn: (...args) => (receivedArguments = args),
       receivedArguments: () => receivedArguments,
-      receivedArgument: n => receivedArguments[n]
+      receivedArgument: (n) => receivedArguments[n],
     };
   };
 
@@ -24,121 +24,136 @@ describe('CustomerForm', () => {
       if (received.receivedArguments() === undefined) {
         return {
           pass: false,
-          message: () => 'Spy was not called.'
+          message: () => "Spy was not called.",
         };
       }
-      return { pass: true, message: () => 'Spy was called.' };
-    }
+      return { pass: true, message: () => "Spy was called." };
+    },
   });
 
-  const form = id => container.querySelector(`form[id="${id}"]`);
-  const field = name => form('customer').elements[name];
-  const labelFor = formElement =>
+  const form = (id) => container.querySelector(`form[id="${id}"]`);
+  const field = (name) => form("customer").elements[name];
+  const labelFor = (formElement) =>
     container.querySelector(`label[for="${formElement}"]`);
 
-  it('renders a form', () => {
+  it("renders a form", () => {
     render(<CustomerForm />);
-    expect(form('customer')).not.toBeNull();
+    expect(form("customer")).not.toBeNull();
   });
 
-  it('has a submit button', () => {
+  it("has a submit button", () => {
     render(<CustomerForm />);
-    const submitButton = container.querySelector(
-      'input[type="submit"]'
-    );
+    const submitButton = container.querySelector('input[type="submit"]');
     expect(submitButton).not.toBeNull();
   });
 
-  const expectToBeInputFieldOfTypeText = formElement => {
+  const expectToBeInputFieldOfTypeText = (formElement) => {
     expect(formElement).not.toBeNull();
-    expect(formElement.tagName).toEqual('INPUT');
-    expect(formElement.type).toEqual('text');
+    expect(formElement.tagName).toEqual("INPUT");
+    expect(formElement.type).toEqual("text");
   };
 
-  const itRendersAsATextBox = fieldName =>
-    it('renders as a text box', () => {
+  const itRendersAsATextBox = (fieldName) =>
+    it("renders as a text box", () => {
       render(<CustomerForm />);
       expectToBeInputFieldOfTypeText(field(fieldName));
     });
 
-  const itIncludesTheExistingValue = fieldName =>
-    it('includes the existing value', () => {
-      render(<CustomerForm {...{ [fieldName]: 'value' }} />);
-      expect(field(fieldName).value).toEqual('value');
+  const itIncludesTheExistingValue = (fieldName) =>
+    it("includes the existing value", () => {
+      render(<CustomerForm {...{ [fieldName]: "value" }} />);
+      expect(field(fieldName).value).toEqual("value");
     });
 
   const itRendersALabel = (fieldName, text) =>
-    it('renders a label', () => {
+    it("renders a label", () => {
       render(<CustomerForm />);
       expect(labelFor(fieldName)).not.toBeNull();
       expect(labelFor(fieldName).textContent).toEqual(text);
     });
 
-  const itAssignsAnIdThatMatchesTheLabelId = fieldName =>
-    it('assigns an id that matches the label id', () => {
+  const itAssignsAnIdThatMatchesTheLabelId = (fieldName) =>
+    it("assigns an id that matches the label id", () => {
       render(<CustomerForm />);
       expect(field(fieldName).id).toEqual(fieldName);
     });
 
-  const itSubmitsExistingValue = (fieldName, value) =>
-    it('saves existing value when submitted', async () => {
-      const submitSpy = spy();
+  const itSubmitsExistingValue = (fieldName) =>
+    it("saves existing value when submitted", async () => {
+      const fetchSpy = spy();
 
       render(
         <CustomerForm
-          {...{ [fieldName]: value }}
-          onSubmit={submitSpy.fn}
+          {...{ [fieldName]: "value" }}
+          fetch={fetchSpy.fn}
+          onSubmit={() => {}}
         />
       );
+      ReactTestUtils.Simulate.submit(form("customer"));
 
-      await ReactTestUtils.Simulate.submit(form('customer'));
-      expect(submitSpy).toHaveBeenCalled();
-      expect(submitSpy.receivedArgument(0)[fieldName]).toEqual(
-        value
-      );
+      const fetchOpts = fetchSpy.receivedArgument(1);
+      expect(JSON.parse(fetchOpts.body)[fieldName]).toEqual("value");
     });
 
-  const itSubmitsNewValue = (fieldName, value) =>
-    it('saves new value when submitted', async () => {
-      expect.hasAssertions();
+  const itSubmitsNewValue = (fieldName) =>
+    it("saves new value when submitted", async () => {
+      const fetchSpy = spy();
+
       render(
         <CustomerForm
-          {...{ [fieldName]: 'existingValue' }}
-          onSubmit={props =>
-            expect(props[fieldName]).toEqual(value)
-          }
+          {...{ [fieldName]: "existingValue" }}
+          fetch={fetchSpy.fn}
+          onSubmit={() => {}}
         />
       );
-      await ReactTestUtils.Simulate.change(field(fieldName), {
-        target: { value, name: fieldName }
+      ReactTestUtils.Simulate.change(field(fieldName), {
+        target: { value: "newValue", name: fieldName },
       });
-      await ReactTestUtils.Simulate.submit(form('customer'));
+      ReactTestUtils.Simulate.submit(form("customer"));
+
+      const fetchOpts = fetchSpy.receivedArgument(1);
+      expect(JSON.parse(fetchOpts.body)[fieldName]).toEqual("newValue");
     });
 
-  describe('first name field', () => {
-    itRendersAsATextBox('firstName');
-    itIncludesTheExistingValue('firstName');
-    itRendersALabel('firstName', 'First name');
-    itAssignsAnIdThatMatchesTheLabelId('firstName');
-    itSubmitsExistingValue('firstName', 'value');
-    itSubmitsNewValue('firstName', 'newValue');
+  it("데이터를 제출할 때 올바른 속성으로 가져 오기 호출", async () => {
+    const fetchSpy = spy();
+    render(<CustomerForm fetch={fetchSpy.fn} onSubmit={() => {}} />);
+    ReactTestUtils.Simulate.submit(form("customer"));
+    expect(fetchSpy).toHaveBeenCalled();
+    expect(fetchSpy.receivedArgument(0)).toEqual("/customers");
+
+    const fetchOpts = fetchSpy.receivedArgument(1);
+    expect(fetchOpts.method).toEqual("POST");
+    expect(fetchOpts.credentials).toEqual("same-origin");
+    expect(fetchOpts.headers).toEqual({
+      "Content-Type": "application/json",
+    });
   });
 
-  describe('last name field', () => {
-    itRendersAsATextBox('lastName');
-    itIncludesTheExistingValue('lastName');
-    itRendersALabel('lastName', 'Last name');
-    itAssignsAnIdThatMatchesTheLabelId('lastName');
-    itSubmitsExistingValue('lastName', 'value');
-    itSubmitsNewValue('lastName', 'newValue');
+  describe("first name field", () => {
+    itRendersAsATextBox("firstName");
+    itIncludesTheExistingValue("firstName");
+    itRendersALabel("firstName", "First name");
+    itAssignsAnIdThatMatchesTheLabelId("firstName");
+    itSubmitsExistingValue("firstName");
+    itSubmitsNewValue("firstName");
   });
 
-  describe('phone number field', () => {
-    itRendersAsATextBox('phoneNumber');
-    itIncludesTheExistingValue('phoneNumber');
-    itRendersALabel('phoneNumber', 'Phone number');
-    itAssignsAnIdThatMatchesTheLabelId('phoneNumber');
-    itSubmitsExistingValue('phoneNumber', '12345');
-    itSubmitsNewValue('phoneNumber', '67890');
+  describe("last name field", () => {
+    itRendersAsATextBox("lastName");
+    itIncludesTheExistingValue("lastName");
+    itRendersALabel("lastName", "Last name");
+    itAssignsAnIdThatMatchesTheLabelId("lastName");
+    itSubmitsExistingValue("lastName");
+    itSubmitsNewValue("lastName");
+  });
+
+  describe("phone number field", () => {
+    itRendersAsATextBox("phoneNumber");
+    itIncludesTheExistingValue("phoneNumber");
+    itRendersALabel("phoneNumber", "Phone number");
+    itAssignsAnIdThatMatchesTheLabelId("phoneNumber");
+    itSubmitsExistingValue("phoneNumber");
+    itSubmitsNewValue("phoneNumber");
   });
 });
