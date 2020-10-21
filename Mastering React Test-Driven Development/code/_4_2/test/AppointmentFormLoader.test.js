@@ -24,4 +24,17 @@ describe('AppointmentFormLoader', () => {
   afterEach(() => {
     window.fetch.mockRestore();
   });
+
+  it('fetches data when component is mounted', () => {
+    render(<AppointmentFormLoader />);
+  
+    expect(window.fetch).toHaveBeenCalledWith(
+      '/availableTimeSlots',
+      expect.objectContaining({
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' }
+      })
+    );
+  });
 });

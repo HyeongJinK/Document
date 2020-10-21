@@ -29,7 +29,7 @@ describe('CustomerForm', () => {
       },
       receivedArguments: () => receivedArguments,
       receivedArgument: n => receivedArguments[n],
-      stubReturnValue: value => returnValue = value
+      stubReturnValue: value => (returnValue = value)
     };
   };
 
@@ -40,7 +40,7 @@ describe('CustomerForm', () => {
     });
 
   const fetchResponseError = () =>
-    Promise.resolve({ ok: false })
+    Promise.resolve({ ok: false });
 
   expect.extend({
     toHaveBeenCalled(received) {
@@ -112,30 +112,30 @@ describe('CustomerForm', () => {
     expect(saveSpy).not.toHaveBeenCalled();
   });
 
+  it('renders error message when fetch call fails', async () => {
+    fetchSpy.stubReturnValue(Promise.resolve({ ok: false }));
+
+    render(<CustomerForm />);
+    await act(async () => {
+      ReactTestUtils.Simulate.submit(form('customer'));
+    });
+
+    const errorElement = container.querySelector('.error');
+    expect(errorElement).not.toBeNull();
+    expect(errorElement.textContent).toMatch('error occurred');
+  });
+
   it('prevents the default action when submitting the form', async () => {
     const preventDefaultSpy = spy();
-  
+
     render(<CustomerForm />);
     await act(async () => {
       ReactTestUtils.Simulate.submit(form('customer'), {
         preventDefault: preventDefaultSpy.fn
       });
     });
-  
-    expect(preventDefaultSpy).toHaveBeenCalled();
-  });
 
-  it('renders error message when fetch call fails', async () => {
-    fetchSpy.stubReturnValue(Promise.resolve({ ok: false }));
-  
-    render(<CustomerForm />);
-    await act(async () => {
-      ReactTestUtils.Simulate.submit(form('customer'));
-    });
-  
-    const errorElement = container.querySelector('.error');
-    expect(errorElement).not.toBeNull();
-    expect(errorElement.textContent).toMatch('error occurred');
+    expect(preventDefaultSpy).toHaveBeenCalled();
   });
 
   const expectToBeInputFieldOfTypeText = formElement => {

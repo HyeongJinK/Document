@@ -23,7 +23,7 @@ export const CustomerForm = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const result = window.fetch('/customers', {
+    const result = await window.fetch('/customers', {
       method: 'POST',
       credentials: 'same-origin',
       headers: { 'Content-Type': 'application/json' },
