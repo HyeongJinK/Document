@@ -50,6 +50,7 @@ describe("AppointmentFormLoader", () => {
   it('displays time slots that are fetched on mount', async () => {
     render(<AppointmentFormLoader />);
   
+    
     expect(
       AppointmentFormExports.AppointmentForm
     ).toHaveBeenLastCalledWith(
