@@ -61,6 +61,7 @@ describe("AppointmentFormLoader", () => {
     );
   });
 
+  
   it('displays time slots that are fetched on mount', async () => {
     await renderAndWait(<AppointmentFormLoader />);
   
