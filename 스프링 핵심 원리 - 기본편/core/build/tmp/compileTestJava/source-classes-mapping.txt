@@ -1,0 +1,10 @@
+hello/core/CoreApplicationTests.java
+ hello.core.CoreApplicationTests
+hello/core/order/OrderServiceImplTest.java
+ hello.core.order.OrderServiceImplTest
+hello/core/member/MemberServiceImplTest.java
+ hello.core.member.MemberServiceImplTest
+hello/core/discount/RateDiscountPolicyTest.java
+ hello.core.discount.RateDiscountPolicyTest
+hello/core/beanfind/ApplicationContextBasicFindTest.java
+ hello.core.beanfind.ApplicationContextBasicFindTest
